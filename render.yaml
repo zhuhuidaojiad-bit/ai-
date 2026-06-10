@@ -1,17 +1,13 @@
-# Render Blueprint — Free Tier Deployment
+# Render Blueprint — Free Tier Deployment (Docker)
 # https://render.com/docs/blueprint-spec
 
 services:
   - type: web
-    name: merchant-agents
-    env: python
-    region: singapore  # 新加坡，对国内访问友好
+    name: ai-agent
+    env: docker
+    region: singapore
     plan: free
-    buildCommand: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
-    startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: PYTHON_VERSION
-        value: "3.11"
       # DeepSeek API
       - key: DEEPSEEK_API_KEY
         sync: false
@@ -31,7 +27,5 @@ services:
         sync: false
       - key: VIDEO_API_URL
         value: https://api.wuyinkeji.com/api/async/video_package
-      - key: HOST
-        value: "0.0.0.0"
       - key: DEBUG
         value: "false"
