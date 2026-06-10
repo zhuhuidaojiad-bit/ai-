@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商家 Agent 工作台</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Sidebar Toggle -->
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="菜单">☰</button>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h2>
+                    <span class="brand-icon">🏪</span>
+                    商家工作台
+                </h2>
+                <div class="brand-sub">Multi‑Agent Orchestrator</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Agent 模块</div>
+                <div class="sidebar-nav-item active" data-agent="all" onclick="scrollToInput()">
+                    <span class="nav-icon">🏠</span> 全部 Agent
+                </div>
+                <div class="sidebar-nav-item" data-agent="copywriting">
+                    <span class="nav-icon">📝</span> 文案生成
+                    <span class="nav-dot" id="navDot-copywriting"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="cover_image">
+                    <span class="nav-icon">🎨</span> 封面图片
+                    <span class="nav-dot" id="navDot-cover_image"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="data_analysis">
+                    <span class="nav-icon">📊</span> 数据分析
+                    <span class="nav-dot" id="navDot-data_analysis"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="orders">
+                    <span class="nav-icon">📦</span> 订单查询
+                    <span class="nav-dot" id="navDot-orders"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="video_script">
+                    <span class="nav-icon">🎬</span> 视频脚本
+                    <span class="nav-dot" id="navDot-video_script"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="video_analysis">
+                    <span class="nav-icon">📈</span> 视频分析
+                    <span class="nav-dot" id="navDot-video_analysis"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="video_breakdown">
+                    <span class="nav-icon">🔍</span> 爆款拆解
+                    <span class="nav-dot" id="navDot-video_breakdown"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="compliance_check">
+                    <span class="nav-icon">🛡️</span> 合规检测
+                    <span class="nav-dot" id="navDot-compliance_check"></span>
+                </div>
+                <div class="sidebar-nav-item" data-agent="video_review">
+                    <span class="nav-icon">🔎</span> 视频审阅
+                    <span class="nav-dot" id="navDot-video_review"></span>
+                </div>
+            </nav>
+
+            <div class="sidebar-history">
+                <h3>📋 历史会话</h3>
+                <div class="session-list" id="sessionList">
+                    <p class="empty-hint">暂无历史会话</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Agent Status Mini Cards -->
+            <div class="agent-status-row" id="agentStatusRow">
+                <div class="agent-mini-card" data-agent="copywriting">
+                    <div class="mini-icon">📝</div>
+                    <div class="mini-name">文案生成</div>
+                    <div class="mini-dot" id="miniDot-copywriting"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="cover_image">
+                    <div class="mini-icon">🎨</div>
+                    <div class="mini-name">封面图片</div>
+                    <div class="mini-dot" id="miniDot-cover_image"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="data_analysis">
+                    <div class="mini-icon">📊</div>
+                    <div class="mini-name">数据分析</div>
+                    <div class="mini-dot" id="miniDot-data_analysis"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="orders">
+                    <div class="mini-icon">📦</div>
+                    <div class="mini-name">订单查询</div>
+                    <div class="mini-dot" id="miniDot-orders"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="video_script">
+                    <div class="mini-icon">🎬</div>
+                    <div class="mini-name">视频脚本</div>
+                    <div class="mini-dot" id="miniDot-video_script"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="video_analysis">
+                    <div class="mini-icon">📈</div>
+                    <div class="mini-name">视频分析</div>
+                    <div class="mini-dot" id="miniDot-video_analysis"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="video_breakdown">
+                    <div class="mini-icon">🔍</div>
+                    <div class="mini-name">爆款拆解</div>
+                    <div class="mini-dot" id="miniDot-video_breakdown"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="compliance_check">
+                    <div class="mini-icon">🛡️</div>
+                    <div class="mini-name">合规检测</div>
+                    <div class="mini-dot" id="miniDot-compliance_check"></div>
+                </div>
+                <div class="agent-mini-card" data-agent="video_review">
+                    <div class="mini-icon">🔎</div>
+                    <div class="mini-name">视频审阅</div>
+                    <div class="mini-dot" id="miniDot-video_review"></div>
+                </div>
+            </div>
+
+            <!-- Upload Bars: Reference Image + Video -->
+            <div class="upload-bars">
+                <!-- Reference Image -->
+                <div class="upload-bar" id="refBar">
+                    <div class="upload-drop-zone" id="imageDropZone">
+                        <span class="upload-icon">🖼️</span>
+                        <span class="upload-label">参考图</span>
+                        <span class="upload-hint">拖入或点击</span>
+                        <input type="file" id="imageFileInput" accept="image/*" multiple style="display:none" />
+                    </div>
+                    <div class="upload-previews" id="referencePreviews"></div>
+                </div>
+
+                <!-- Video Upload -->
+                <div class="upload-bar" id="videoBar">
+                    <div class="upload-drop-zone" id="videoDropZone">
+                        <span class="upload-icon">🎬</span>
+                        <span class="upload-label">视频</span>
+                        <span class="upload-hint">拖入或点击</span>
+                        <input type="file" id="videoFileInput" accept="video/*" style="display:none" />
+                    </div>
+                    <div class="upload-previews" id="videoPreview"></div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <span class="input-icon">💬</span>
+                    <input
+                        type="text"
+                        id="userInput"
+                        placeholder="输入你想做的事情，例如：帮我分析本周订单数据，为爆款产品生成短视频脚本和封面"
+                        autocomplete="off"
+                    />
+                    <button id="sendBtn" onclick="sendMessage()">
+                        <span style="margin-right:2px">▶</span> 发送
+                    </button>
+                </div>
+
+                <div class="quick-actions">
+                    <span>快捷指令</span>
+                    <button class="quick-btn" onclick="quickSend('帮我查最近7天的订单情况')">📦 查订单</button>
+                    <button class="quick-btn" onclick="quickSend('分析本周销售数据，找出爆款产品')">📊 数据分析</button>
+                    <button class="quick-btn" onclick="quickSend('为无线蓝牙耳机写抖音短视频脚本和封面')">🎬 视频+封面</button>
+                    <button class="quick-btn" onclick="quickSend('帮我生成一份本周运营周报')">📝 运营周报</button>
+                </div>
+            </div>
+
+            <!-- Progress Panel -->
+            <div class="panel progress-panel" id="progressPanel" style="display:none;">
+                <h3>⚡ 执行进度</h3>
+                <div class="agent-progress-list" id="agentProgressList">
+                    <!-- Dynamically filled by app.js -->
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="panel results-panel" id="resultsPanel" style="display:none;">
+                <h3>📋 执行结果</h3>
+                <div class="tabs" id="resultTabs">
+                    <!-- Dynamically filled by app.js -->
+                </div>
+                <div class="tab-content" id="tabContent">
+                    <!-- Dynamically filled by app.js -->
+                </div>
+            </div>
+
+            <!-- Summary Toast -->
+            <div class="summary-panel" id="summaryPanel" style="display:none;">
+                <h3>📝 综合汇总</h3>
+                <div class="summary-content" id="summaryContent"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
